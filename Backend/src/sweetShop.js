@@ -22,6 +22,21 @@ const delete_sweet = async (req, res) => {
 
 }
 
+const view_sweet = async (req, res) => {
+    try {
+        let sweets = await Sweets.find();
+        if (Sweets.length > 0) {
+            res.send(sweets);
+        }
+        else {
+            res.send({ result: "No Sweets Found" })
+        }
+    } catch (error) {
+        res.status(400).json({ error: error.message });  // 🔍 send validation errors back
+    }
+
+}
+
 module.exports = {
-    add_sweet, delete_sweet
+    add_sweet, delete_sweet, view_sweet
 }
