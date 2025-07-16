@@ -12,6 +12,16 @@ const add_sweet = async (req, res) => {
 
 }
 
+const delete_sweet = async (req, res) => {
+    try {
+        const result = await Sweets.deleteOne({ _id: req.params.id });
+        res.send(result);
+    } catch (error) {
+        res.status(400).json({ error: error.message });  // 🔍 send validation errors back
+    }
+
+}
+
 module.exports = {
-    add_sweet
+    add_sweet, delete_sweet
 }
