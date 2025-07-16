@@ -2,7 +2,7 @@ const express = require('express');
 
 const dotenv = require('dotenv');
 const { add_sweet,delete_sweet, view_sweet,search_sweets,sort_sweets,purchase_sweet ,restock_sweet } = require('./sweetShop');
-
+const { register, login } = require('./loginRegister');
 require('./db/config'); // Ensure the database connection is established
 
 dotenv.config();
@@ -12,6 +12,10 @@ port = process.env.PORT ;
 const app = express();
 
 app.use(express.json());
+
+app.post("/register", register);
+
+app.post("/login",login);
 
 app.post("/add-sweet",add_sweet);
 
