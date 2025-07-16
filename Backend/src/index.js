@@ -2,6 +2,7 @@ const express = require('express');
 
 const dotenv = require('dotenv');
 const { add_sweet,delete_sweet, view_sweet,search_sweets,sort_sweets,purchase_sweet ,restock_sweet } = require('./sweetShop');
+
 require('./db/config'); // Ensure the database connection is established
 
 dotenv.config();
