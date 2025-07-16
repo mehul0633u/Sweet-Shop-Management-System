@@ -98,6 +98,28 @@ const purchase_sweet = async (req, res) => {
   }
 };
 
+const restock_sweet = async (req, res) => {
+  try {
+    const { id, quantity } = req.body;
+
+    // 1. Find the sweet by your custom 'id' field
+    const sweet = await Sweets.findOne({ id });
+
+    if (!sweet) {
+      return res.status(404).json({ error: "Sweet not found" });
+    }
+
+    // 2. Increase quantity and save
+    sweet.quantity += quantity;
+    await sweet.save();
+
+    res.json({ message: "Restock successful", sweet });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 module.exports = {
-    add_sweet, delete_sweet, view_sweet,search_sweets, sort_sweets,purchase_sweet
+    add_sweet, delete_sweet, view_sweet,search_sweets, sort_sweets,purchase_sweet,restock_sweet
 }
