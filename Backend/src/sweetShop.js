@@ -45,8 +45,18 @@ const search_sweets = async (req, res) => {
         const { name, category, minPrice, maxPrice } = req.query;
 
         const query = {};
-        if (name) query.name = name;
-        if (category) query.category = category;
+
+        //  Fuzzy, case-insensitive match for name
+        if (name) {
+            query.name = { $regex: name, $options: 'i' };
+        }
+
+        //  Fuzzy, case-insensitive match for category
+        if (category) {
+            query.category = { $regex: category, $options: 'i' };
+        }
+
+        //  Numeric range for price
         if (minPrice || maxPrice) {
             query.price = {};
             if (minPrice) query.price.$gte = Number(minPrice);
@@ -59,6 +69,7 @@ const search_sweets = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 };
+
 
 //  Sort sweets by field and order
 const sort_sweets = async (req, res) => {
